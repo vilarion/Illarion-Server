@@ -130,9 +130,6 @@ int main(int argc, char *argv[]) {
     PlayerManager::get().activate();
     Logger::info(LogFacility::Other) << "PlayerManager activated" << Log::end;
     PlayerManager::TPLAYERVECTOR &newplayers = PlayerManager::get().getLogInPlayers();
-    timespec stime;
-    stime.tv_sec = 0;
-    stime.tv_nsec = 25000000;
     world->initNPC();
 
     try {
@@ -162,7 +159,7 @@ int main(int argc, char *argv[]) {
         while (!newplayers.empty() && new_players_processed < MAXPLAYERSPROCESSED) {
 
             new_players_processed++;
-            Player *newPlayer = newplayers.non_block_pop_front();
+            Player *newPlayer = newplayers.pop_front();
 
             if (newPlayer) {
                 login_save(newPlayer);
@@ -178,7 +175,7 @@ int main(int argc, char *argv[]) {
                     } catch (Player::LogoutException &e) {
                         ServerCommandPointer cmd = std::make_shared<LogOutTC>(e.getReason());
                         newPlayer->Connection->shutdownSend(cmd);
-                        PlayerManager::get().getLogOutPlayers().non_block_push_back(newPlayer);
+                        PlayerManager::get().getLogOutPlayers().push_back(newPlayer);
                     }
                 }
             } else {
@@ -187,9 +184,8 @@ int main(int argc, char *argv[]) {
 
         } // get new players
 
-        // Eingaben der Player abarbeiten und die Karte altern
-        world->turntheworld();
-        nanosleep(&stime, nullptr);
+        // run scheduler until next task or for 25ms
+	world->scheduler.run_once(std::chrono::milliseconds(25));
         Statistics::getInstance().stopTimer(Statistics::cycle);
     }
 
