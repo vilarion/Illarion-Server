@@ -37,7 +37,7 @@ public:
     void setBaseValue(attribute_t value);
     void setValue(attribute_t value);
     [[nodiscard]] auto getBaseValue() const -> attribute_t;
-    [[nodiscard]] auto getValue() const -> attribute_t;
+    auto getValue() const -> attribute_t;
     void increaseBaseValue(int amount);
     void increaseValue(int amount);
 };
