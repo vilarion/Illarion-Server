@@ -397,7 +397,7 @@ void Field::removePersistence() {
     }
 }
 
-auto Field::isPersistent() -> bool { return persistent; }
+auto Field::isPersistent() const -> bool { return persistent; }
 
 void Field::age() {
     for (const auto &container : containers) {

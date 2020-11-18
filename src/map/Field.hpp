@@ -112,7 +112,7 @@ public:
 
     void makePersistent();
     void removePersistence();
-    [[nodiscard]] auto isPersistent() -> bool;
+    [[nodiscard]] auto isPersistent() const -> bool;
 
 private:
     void updateFlags();
