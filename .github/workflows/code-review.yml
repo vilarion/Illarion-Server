@@ -1,12 +1,6 @@
 name: Code Review
 
-on:
-  push:
-    branches:
-      - '**'
-
-  # Run tests for any PRs.
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   cppcheck:
