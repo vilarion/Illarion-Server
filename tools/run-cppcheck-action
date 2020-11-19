@@ -1,8 +1,0 @@
-SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-pushd $SCRIPTPATH > /dev/null
-docker-compose -f cppcheck.yml run --rm cppcheck-xml
-exit_code=$?
-cat /tmp/cppcheck.xml
-python3 annotate-cppcheck.py
-popd > /dev/null
-exit "$exit_code"

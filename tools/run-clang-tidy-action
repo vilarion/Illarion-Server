@@ -1,8 +1,0 @@
-SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-pushd $SCRIPTPATH > /dev/null
-mkdir -p /tmp/build
-docker-compose -f clang-tidy.yml run --rm clang-tidy-action
-exit_code=$?
-python3 annotate-clang-tidy.py
-popd > /dev/null
-exit "$exit_code"

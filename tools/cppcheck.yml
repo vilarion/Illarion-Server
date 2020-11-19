@@ -8,17 +8,4 @@ services:
       - type: bind
         source: ..
         target: /src
-    command: sh -c "cppcheck --std=c++17 --enable=warning,style,performance,portability --inconclusive -j $$(nproc) --error-exitcode=1 -q --suppress=functionStatic:src/db/InsertQuery.hpp -Isrc/ src/"
-    network_mode: none
-
-  cppcheck-xml:
-    image: ghcr.io/illarion-ev/illarion-server-tools-cppcheck
-    volumes:
-      - type: bind
-        source: ..
-        target: /src
-      - type: bind
-        source: /tmp
-        target: /tmp
-    command: sh -c "cppcheck --std=c++17 --enable=warning,style,performance,portability --inconclusive -j $$(nproc) --xml --xml-version=2 --output-file=/tmp/cppcheck.xml --error-exitcode=1 -q --suppress=functionStatic:src/db/InsertQuery.hpp -Isrc/ src/"
     network_mode: none
