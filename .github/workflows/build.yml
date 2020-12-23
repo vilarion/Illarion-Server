@@ -5,8 +5,6 @@ on:
     branches:
     tags:
   pull_request:
-  schedule:
-    - cron: '00 15 * * 5'
 
 jobs:
   build:
@@ -50,7 +48,6 @@ jobs:
             ${{ runner.os }}-${{ matrix.build-type }}-cmake-
 
       - name: Initialize CodeQL
-        if: ${{ github.event_name == 'schedule' }}
         uses: github/codeql-action/init@v1
         with:
           languages: cpp
@@ -66,7 +63,6 @@ jobs:
         run: cmake --build . --config ${{ matrix.build-type }} --parallel 2
 
       - name: Perform CodeQL Analysis
-        if: ${{ github.event_name == 'schedule' }}
         uses: github/codeql-action/analyze@v1
 
       - name: Test
